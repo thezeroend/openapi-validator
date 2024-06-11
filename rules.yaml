@@ -1,0 +1,27 @@
+rules:
+  SEC001:
+    description: O servidor de operacao deve ser HTTPS.
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  SEC002:
+    description: Todas as operacoes devem ter um parametro de autenticacao.
+    type: validation
+    given: "$.paths.*.*"
+    then:
+      function: hasProperty
+      functionOptions:
+        property: security
+
+  FORMAT001:
+    description: Os nomes das operacoes devem estar em lower_snake_case.
+    type: validation
+    given: "$.paths.*.*.operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z0-9_]+$"
+

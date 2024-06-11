@@ -1,0 +1,79 @@
+openapi: 3.0.1
+info:
+  title: Exemplo de API
+  version: 1.0.0
+servers:
+  - url: http://api.exemplo.com/v1
+paths:
+  /pets:
+    get:
+      summary: Lista todos os pets
+      operationId: listPets  # Este deve falhar, não está em lower_snake_case
+      responses:
+        '200':
+          description: Uma lista de pets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /pets/{petId}:
+    get:
+      summary: Recupera um pet pelo ID
+      operationId: get_pet_by_id  # Este deve passar, está em lower_snake_case
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: ID do pet a ser recuperado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do pet.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+  /owners:
+    get:
+      summary: Lista todos os donos de pets
+      operationId: list_owners  # Este deve passar, está em lower_snake_case
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: Uma lista de donos de pets.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    OwnerDetails:  # Este deve falhar, não está em lower_snake_case
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

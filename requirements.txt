@@ -1,0 +1,4 @@
+openapi_spec_validator
+pyyaml
+ruamel.yaml
+jsonpath_ng
